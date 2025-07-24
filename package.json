@@ -1,0 +1,33 @@
+{
+  "name": "@cityssm/consigno-cloud-api",
+  "version": "0.1.0",
+  "description": "An unofficial wrapper around the ConsignO Cloud API.",
+  "keywords": [
+    "consigno"
+  ],
+  "homepage": "https://github.com/cityssm/node-consigno-cloud-api#readme",
+  "bugs": {
+    "url": "https://github.com/cityssm/node-consigno-cloud-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cityssm/node-consigno-cloud-api.git"
+  },
+  "license": "MIT",
+  "author": "The Corporation of the City of Sault Ste. Marie",
+  "type": "module",
+  "exports": "./index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@cityssm/to-millis": "^1.0.0",
+    "debug": "^4.4.1"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@types/node": "^24.0.15",
+    "eslint-config-cityssm": "^27.0.0",
+    "prettier-config-cityssm": "^1.0.0"
+  }
+}
