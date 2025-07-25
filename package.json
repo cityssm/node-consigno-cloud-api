@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "An unofficial wrapper around the ConsignO Cloud API.",
   "keywords": [
-    "consigno"
+    "consigno",
+    "consigno-cloud"
   ],
   "homepage": "https://github.com/cityssm/node-consigno-cloud-api#readme",
   "bugs": {
