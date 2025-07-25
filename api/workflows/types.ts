@@ -30,8 +30,10 @@ export interface ConsignoCloudResponseWorkflow {
       fields: Array<{
         x: number
         y: number
+
         width: number
         height: number
+        
         assignedTo: string
         name: string
         visible: boolean

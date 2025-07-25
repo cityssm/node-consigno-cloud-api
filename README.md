@@ -4,6 +4,15 @@ An unofficial wrapper around the [ConsignO Cloud](https://consignocloud.com/) AP
 
 _Note that this project is not endorsed by Notarius._
 
+## Installation
+
+When development is more complete, the package will be available from NPM.
+Until then, it can be install from the GitHub repository.
+
+```sh
+npm install github:cityssm/node-consigno-cloud-api
+```
+
 ## Usage
 
 ```javascript
@@ -23,6 +32,8 @@ const workflowData = await api.getWorkflow('workflowABC')
 ```
 
 ## Supported APIs
+
+Using this package in a Typescript environment is encouraged to help with complex function parameters.
 
 - `getWorkflow(workflowId)`
 - `createWorkflow(workflowDefinition)`
