@@ -48,7 +48,7 @@ await describe('ConsignoCloudAPI', async () => {
 
     assert.ok(isPdf(auditTrailPdf.data))
 
-    const filePath = `./test/output/auditTrail.pdf`
+    const filePath = './test/output/auditTrail.pdf'
 
     await fs.writeFile(filePath, auditTrailPdf.data)
 
@@ -64,7 +64,10 @@ await describe('ConsignoCloudAPI', async () => {
 
     const { contentType, data } = await api.downloadDocuments(workflowId)
 
-    assert.ok(isPdf(data) || contentType === 'application/zip')
+    assert.ok(
+      (contentType === 'application/pdf' && isPdf(data)) ||
+        contentType === 'application/zip'
+    )
 
     const filePath = `./test/output/documents.${contentType === 'application/pdf' ? 'pdf' : 'zip'}`
 
