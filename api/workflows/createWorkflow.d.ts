@@ -1,0 +1,88 @@
+import type { ConsignoCloudAPIType } from '../../index.js';
+import type { ActionMode, AuthenticationMethodReference, CreateWorkflowStatus, Language, PDFAPolicy, SignerType } from '../../lookups.js';
+import type { ConsignoCloudResponseWorkflow } from './types.js';
+export declare function createWorkflow(this: ConsignoCloudAPIType, workflowDefinition: CreateWorkflowRequest): Promise<ConsignoCloudResponseWorkflow>;
+interface Document_UploadAsData {
+    name: string;
+    data: string;
+}
+interface Document_PreviouslyUploaded {
+    documentId: string;
+}
+interface Signer_Type_Certifio {
+    type: 'certifio';
+    subjectDN: string;
+}
+interface Signer_Type_Other {
+    type: Exclude<(typeof SignerType)[keyof typeof SignerType], 'certifio'>;
+}
+interface SignerAndContact_AMR_Secret {
+    amr: Array<(typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference]>;
+    secretQuestion: string;
+    secretAnswer: string;
+    isSecretAnswerChanged: true;
+}
+interface SignerAndContact_AMR_NoSecret {
+    amr: Array<Exclude<(typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference], 'secret'>>;
+}
+export interface CreateWorkflowRequest {
+    name: string;
+    expiresOn: `${number}-${number}-${number}` | number;
+    pdfaPolicy: (typeof PDFAPolicy)[keyof typeof PDFAPolicy];
+    documents: Array<(Document_PreviouslyUploaded | Document_UploadAsData) & {
+        fields?: Array<{
+            x: number;
+            y: number;
+            /** Default = 165 */
+            height?: number;
+            width?: number;
+            page: string;
+            assignedTo: `${number}`;
+        }>;
+        anchors?: Array<{
+            tag: string;
+            assignedTo: `${number}`;
+            xOffset: number;
+            yOffset: number;
+            /** Default = 165 */
+            height?: number;
+            width?: number;
+            page: string;
+            skipIfNotFound?: boolean;
+        }>;
+    }>;
+    /** 0 = create, 1 = create and launch */
+    status: (typeof CreateWorkflowStatus)[keyof typeof CreateWorkflowStatus];
+    actions: Array<{
+        mode?: (typeof ActionMode)[keyof typeof ActionMode];
+        returnUrl?: string;
+        zoneLabel: string;
+        step: number;
+        ref: `${number}`;
+        signer: (Signer_Type_Certifio | Signer_Type_Other) & (SignerAndContact_AMR_NoSecret | SignerAndContact_AMR_Secret) & {
+            firstName: string;
+            lastName: string;
+            email: string;
+            phone: string;
+            lang?: (typeof Language)[keyof typeof Language];
+            clientUserId?: string;
+            role?: string;
+            placeHolder?: boolean;
+        };
+    }>;
+    notifications: Array<{
+        contact: (SignerAndContact_AMR_NoSecret | SignerAndContact_AMR_Secret) & {
+            firstName: string;
+            lastName: string;
+            email: string;
+            phone: string;
+            lang?: (typeof Language)[keyof typeof Language];
+        };
+    }>;
+    webhooks?: Array<{
+        url: string;
+        /** Default = false */
+        insecure?: boolean;
+    }>;
+}
+export {};

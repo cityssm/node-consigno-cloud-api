@@ -1,9 +1,5 @@
-import type { PDFAPolicy } from './lookups.js';
-type ActionMode = 'embedded' | 'remote';
+import type { ActionMode, AuthenticationMethodReference, Language, SignerType } from '../../lookups.js';
 type ActionStatus = 'COMPLETED' | 'DECLINED' | 'IN_PROGRESS' | 'NOT_STARTED' | 'STARTED';
-type SignerType = 'approver' | 'certifio' | 'certifiocloud' | 'esig' | 'freezone';
-type AuthenticationMethodReference = 'call' | 'certifiocloud' | 'link' | 'saml' | 'secret' | 'sms';
-type Language = 'en' | 'fr';
 export interface ConsignoCloudResponseWorkflow {
     msg: string;
     parameters: unknown;
@@ -59,13 +55,13 @@ export interface ConsignoCloudResponseWorkflow {
             id: string;
             step: number;
             signer: {
-                type: SignerType;
-                email: string;
+                type: (typeof SignerType)[keyof typeof SignerType];
                 firstName: string;
                 lastName: string;
+                email: string;
                 phone: string;
-                amr: AuthenticationMethodReference[];
-                lang: Language;
+                amr: Array<(typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference]>;
+                lang: (typeof Language)[keyof typeof Language];
                 contactOwner: string;
                 placeHolder: boolean;
                 generated: boolean;
@@ -73,8 +69,8 @@ export interface ConsignoCloudResponseWorkflow {
             };
             status: ActionStatus;
             statusDate: string;
-            mode: ActionMode;
-            secondFactorUsed: Array<'none' | AuthenticationMethodReference>;
+            mode: (typeof ActionMode)[keyof typeof ActionMode];
+            secondFactorUsed: Array<'none' | (typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference]>;
             declineReason: unknown;
         }>;
         statusDate: string;
@@ -99,79 +95,5 @@ export interface ConsignoCloudResponseWorkflow {
             lastName: string;
         }>;
     };
-}
-export interface ConsignoCloudRequestWorkflowCreate {
-    name: string;
-    expiresOn: `${number}-${number}-${number}` | number;
-    pdfaPolicy: (typeof PDFAPolicy)[keyof typeof PDFAPolicy];
-    documents: Array<{
-        documentId?: string;
-        name: string;
-        data?: string;
-        fields?: Array<{
-            x: number;
-            y: number;
-            height: number;
-            width: number;
-            page: string;
-            assignedTo: `${number}`;
-        }>;
-        anchors?: Array<{
-            tag: string;
-            assignedTo: `${number}`;
-            xOffset: number;
-            yOffset: number;
-            height: number;
-            width: number;
-            page: string;
-            skipIfNotFound?: boolean;
-        }>;
-    }>;
-    /** 0 = create, 1 = create and launch */
-    status: 0 | 1;
-    actions: Array<{
-        mode: ActionMode;
-        returnUrl?: string;
-        zoneLabel: string;
-        step: number;
-        ref: `${number}`;
-        signer: {
-            type: SignerType;
-            firstName: string;
-            lastName: string;
-            email: string;
-            phone: string;
-            /** Must be set when AMR = 'secret' */
-            secretQuestion?: string;
-            /** Must be set when AMR = 'secret' */
-            secretAnswer?: string;
-            /** Must be set when AMR = 'secret' */
-            isSecretAnswerChanged?: boolean;
-            amr?: AuthenticationMethodReference[];
-            /** Must be set when type = 'certifio' */
-            subjectDN?: string;
-            lang?: Language;
-            clientUserId?: string;
-            role?: string;
-            placeHolder?: boolean;
-        };
-    }>;
-    notifications: Array<{
-        contact: {
-            firstName: string;
-            lastName: string;
-            email: string;
-            phone: string;
-            secretQuestion?: string;
-            secretAnswer?: string;
-            isSecretAnswerChanged?: boolean;
-            amr?: AuthenticationMethodReference[];
-            lang?: Language;
-        };
-    }>;
-    webhooks?: Array<{
-        url: string;
-        insecure: boolean;
-    }>;
 }
 export {};

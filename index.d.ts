@@ -1,13 +1,16 @@
-import type { ConsignoCloudRequestWorkflowCreate, ConsignoCloudResponseWorkflow } from './types.js';
+import { type ApiFunctionTypes } from './api/api.js';
 export interface ConsignoCloudAPIConfig {
     apiKey: string;
     apiSecret: string;
     baseUrl: `https://${string}/api/v1`;
 }
-export declare class ConsignoCloudAPI {
+export declare class _ConsignoCloudAPI {
     #private;
     constructor(apiConfig: ConsignoCloudAPIConfig);
     clearAuthToken(): this;
+    get authToken(): string | undefined;
+    get baseUrl(): `https://${string}/api/v1`;
+    updateAuthTokenLastUsedMillis(): this;
     /**
      * Authenticate as a specific user.
      * Note that to use this mode, the platform must be authorized to use "loginAs" functionality.
@@ -21,11 +24,7 @@ export declare class ConsignoCloudAPI {
      * @returns this
      */
     clearLoginAs(): this;
-    /**
-     * Retrieve a workflow by its ID.
-     * @param workflowId - The ID of the workflow to retrieve.
-     * @returns A promise that resolves to the workflow details.
-     */
-    getWorkflow(workflowId: string): Promise<ConsignoCloudResponseWorkflow>;
-    createWorkflow(workflowDefinition: ConsignoCloudRequestWorkflowCreate): Promise<ConsignoCloudResponseWorkflow>;
+    ensureActiveAuthToken(forceRefresh?: boolean): Promise<void>;
 }
+export type ConsignoCloudAPIType = ApiFunctionTypes & InstanceType<typeof _ConsignoCloudAPI>;
+export declare const ConsignoCloudAPI: new (apiConfig: ConsignoCloudAPIConfig) => ConsignoCloudAPIType;

@@ -11,3 +11,30 @@ export const WorkflowStatus = {
     4: 'Created from Template, Not Launched',
     5: 'Declined'
 };
+export const CreateWorkflowStatus = {
+    Create: 0,
+    CreateAndLaunch: 1
+};
+export const ActionMode = {
+    Embedded: 'embedded',
+    Remote: 'remote'
+};
+export const Language = {
+    English: 'en',
+    French: 'fr'
+};
+export const SignerType = {
+    Approver: 'approver',
+    Certifio: 'certifio',
+    CertifioCloud: 'certifiocloud',
+    Esig: 'esig',
+    Freezone: 'freezone'
+};
+export const AuthenticationMethodReference = {
+    Call: 'call',
+    CertifioCloud: 'certifiocloud',
+    Link: 'link',
+    SAML: 'saml',
+    Secret: 'secret',
+    SMS: 'sms'
+};

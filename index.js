@@ -1,18 +1,35 @@
 import Debug from 'debug';
+import { apiFunctions } from './api/api.js';
 import { authTokenRefreshThresholdMillis, authTokenTimeoutMillis } from './constants.js';
 import { DEBUG_NAMESPACE } from './debug.config.js';
 const debug = Debug(`${DEBUG_NAMESPACE}:index`);
-export class ConsignoCloudAPI {
-    #apiConfig;
+// eslint-disable-next-line sonarjs/class-name
+export class _ConsignoCloudAPI {
+    #baseUrl;
+    #apiKey;
+    #apiSecret;
     #loginAs;
     #authToken;
     #authTokenLastUsedMillis = 0;
     constructor(apiConfig) {
-        this.#apiConfig = apiConfig;
+        this.#baseUrl = apiConfig.baseUrl;
+        this.#apiKey = apiConfig.apiKey;
+        this.#apiSecret = apiConfig.apiSecret;
+        Object.assign(this, apiFunctions);
     }
     clearAuthToken() {
         this.#authToken = undefined;
         this.#authTokenLastUsedMillis = 0;
+        return this;
+    }
+    get authToken() {
+        return this.#authToken;
+    }
+    get baseUrl() {
+        return this.#baseUrl;
+    }
+    updateAuthTokenLastUsedMillis() {
+        this.#authTokenLastUsedMillis = Date.now();
         return this;
     }
     /**
@@ -36,7 +53,7 @@ export class ConsignoCloudAPI {
         this.clearAuthToken();
         return this;
     }
-    async #ensureActiveAuthToken(forceRefresh = false) {
+    async ensureActiveAuthToken(forceRefresh = false) {
         if (!forceRefresh &&
             this.#authToken !== undefined &&
             Date.now() - this.#authTokenLastUsedMillis <
@@ -48,19 +65,17 @@ export class ConsignoCloudAPI {
             'Content-Type': 'application/json'
         };
         if (this.#loginAs !== undefined) {
-            headers['X-Client-Id'] = this.#apiConfig.apiKey;
-            headers['X-Client-Secret'] = this.#apiConfig.apiSecret;
+            headers['X-Client-Id'] = this.#apiKey;
+            headers['X-Client-Secret'] = this.#apiSecret;
         }
-        const response = await fetch(`${this.#apiConfig.baseUrl}/auth/login`, {
+        const response = await fetch(`${this.baseUrl}/auth/login`, {
             headers,
             method: 'POST',
             body: JSON.stringify({
                 password: this.#loginAs === undefined
-                    ? this.#apiConfig.apiSecret
+                    ? this.#apiSecret
                     : this.#loginAs.password,
-                username: this.#loginAs === undefined
-                    ? this.#apiConfig.apiKey
-                    : this.#loginAs.userName
+                username: this.#loginAs === undefined ? this.#apiKey : this.#loginAs.userName
             })
         });
         if (!response.ok) {
@@ -69,41 +84,6 @@ export class ConsignoCloudAPI {
         }
         this.#authToken = response.headers.get('X-Auth-Token') ?? undefined;
     }
-    /**
-     * Retrieve a workflow by its ID.
-     * @param workflowId - The ID of the workflow to retrieve.
-     * @returns A promise that resolves to the workflow details.
-     */
-    async getWorkflow(workflowId) {
-        await this.#ensureActiveAuthToken();
-        const response = await fetch(`${this.#apiConfig.baseUrl}/workflows/${workflowId}`, {
-            headers: {
-                'X-Auth-Token': this.#authToken ?? ''
-            }
-        });
-        if (!response.ok) {
-            throw new Error('Failed to fetch workflow');
-        }
-        this.#authTokenLastUsedMillis = Date.now();
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-        return (await response.json());
-    }
-    async createWorkflow(workflowDefinition) {
-        await this.#ensureActiveAuthToken();
-        const response = await fetch(`${this.#apiConfig.baseUrl}/workflows`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Auth-Token': this.#authToken ?? ''
-            },
-            body: JSON.stringify(workflowDefinition)
-        });
-        if (!response.ok) {
-            debug('Failed to create workflow:', await response.text());
-            throw new Error('Failed to create workflow');
-        }
-        this.#authTokenLastUsedMillis = Date.now();
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-        return (await response.json());
-    }
 }
+// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+export const ConsignoCloudAPI = _ConsignoCloudAPI;
