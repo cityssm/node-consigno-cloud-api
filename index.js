@@ -4,7 +4,7 @@ import { authTokenRefreshThresholdMillis, authTokenTimeoutMillis } from './const
 import { DEBUG_NAMESPACE } from './debug.config.js';
 const debug = Debug(`${DEBUG_NAMESPACE}:index`);
 // eslint-disable-next-line sonarjs/class-name
-export class _ConsignoCloudAPI {
+class _ConsignoCloudAPI {
     #baseUrl;
     #apiKey;
     #apiSecret;
@@ -58,7 +58,7 @@ export class _ConsignoCloudAPI {
             this.#authToken !== undefined &&
             Date.now() - this.#authTokenLastUsedMillis <
                 authTokenTimeoutMillis - authTokenRefreshThresholdMillis) {
-            return;
+            return this;
         }
         debug('Authenticating...');
         const headers = {
@@ -83,7 +83,10 @@ export class _ConsignoCloudAPI {
             throw new Error('Failed to authenticate');
         }
         this.#authToken = response.headers.get('X-Auth-Token') ?? undefined;
+        return this;
     }
 }
 // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 export const ConsignoCloudAPI = _ConsignoCloudAPI;
+export { default as lookups } from './lookups.js';
+export { default as utilities } from './utilities.js';

@@ -5,3 +5,7 @@
  * @throws Will throw an error if the file cannot be read.
  */
 export declare function fileToBase64(filePath: string): Promise<string>;
+declare const _default: {
+    fileToBase64: typeof fileToBase64;
+};
+export default _default;

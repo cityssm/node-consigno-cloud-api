@@ -16,7 +16,11 @@
   "license": "MIT",
   "author": "The Corporation of the City of Sault Ste. Marie",
   "type": "module",
-  "exports": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./lookups.js": "./lookups.js",
+    "./utilities.js": "./utilities.js"
+  },
   "scripts": {
     "test": "node --test"
   },

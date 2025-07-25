@@ -16,7 +16,7 @@ export interface ConsignoCloudAPIConfig {
 }
 
 // eslint-disable-next-line sonarjs/class-name
-export class _ConsignoCloudAPI {
+class _ConsignoCloudAPI {
   readonly #baseUrl: `https://${string}/api/v1`
 
   readonly #apiKey: string
@@ -82,14 +82,14 @@ export class _ConsignoCloudAPI {
     return this
   }
 
-  async ensureActiveAuthToken(forceRefresh = false): Promise<void> {
+  async ensureActiveAuthToken(forceRefresh = false): Promise<this> {
     if (
       !forceRefresh &&
       this.#authToken !== undefined &&
       Date.now() - this.#authTokenLastUsedMillis <
         authTokenTimeoutMillis - authTokenRefreshThresholdMillis
     ) {
-      return
+      return this
     }
 
     debug('Authenticating...')
@@ -124,14 +124,9 @@ export class _ConsignoCloudAPI {
     }
 
     this.#authToken = response.headers.get('X-Auth-Token') ?? undefined
-  }
 
-  /**
-   * Retrieve a workflow by its ID.
-   * @param workflowId - The ID of the workflow to retrieve.
-   * @returns A promise that resolves to the workflow details.
-   */
-  
+    return this
+  }
 }
 
 export type ConsignoCloudAPIType = ApiFunctionTypes &
@@ -141,3 +136,7 @@ export type ConsignoCloudAPIType = ApiFunctionTypes &
 export const ConsignoCloudAPI = _ConsignoCloudAPI as unknown as new (
   apiConfig: ConsignoCloudAPIConfig
 ) => ConsignoCloudAPIType
+
+export { default as lookups } from './lookups.js'
+
+export { default as utilities } from './utilities.js'

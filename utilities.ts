@@ -10,3 +10,7 @@ export async function fileToBase64(filePath: string): Promise<string> {
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   return await fs.readFile(filePath, 'base64')
 }
+
+export default {
+  fileToBase64
+}

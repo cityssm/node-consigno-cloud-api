@@ -4,7 +4,7 @@ export interface ConsignoCloudAPIConfig {
     apiSecret: string;
     baseUrl: `https://${string}/api/v1`;
 }
-export declare class _ConsignoCloudAPI {
+declare class _ConsignoCloudAPI {
     #private;
     constructor(apiConfig: ConsignoCloudAPIConfig);
     clearAuthToken(): this;
@@ -24,7 +24,9 @@ export declare class _ConsignoCloudAPI {
      * @returns this
      */
     clearLoginAs(): this;
-    ensureActiveAuthToken(forceRefresh?: boolean): Promise<void>;
+    ensureActiveAuthToken(forceRefresh?: boolean): Promise<this>;
 }
 export type ConsignoCloudAPIType = ApiFunctionTypes & InstanceType<typeof _ConsignoCloudAPI>;
 export declare const ConsignoCloudAPI: new (apiConfig: ConsignoCloudAPIConfig) => ConsignoCloudAPIType;
+export { default as lookups } from './lookups.js';
+export { default as utilities } from './utilities.js';

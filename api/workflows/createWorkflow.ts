@@ -18,6 +18,7 @@ import type { ConsignoCloudResponseWorkflow } from './types.js'
 
 const debug = Debug(`${DEBUG_NAMESPACE}:createWorkflow`)
 
+// eslint-disable-next-line jsdoc/require-jsdoc
 export async function createWorkflow(
   this: ConsignoCloudAPIType,
   workflowDefinition: CreateWorkflowRequest

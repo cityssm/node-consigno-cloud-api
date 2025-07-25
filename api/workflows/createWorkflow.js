@@ -3,6 +3,7 @@
 import Debug from 'debug';
 import { DEBUG_NAMESPACE } from '../../debug.config.js';
 const debug = Debug(`${DEBUG_NAMESPACE}:createWorkflow`);
+// eslint-disable-next-line jsdoc/require-jsdoc
 export async function createWorkflow(workflowDefinition) {
     await this.ensureActiveAuthToken();
     const response = await fetch(`${this.baseUrl}/workflows`, {

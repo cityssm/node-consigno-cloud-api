@@ -2,6 +2,7 @@ import type { ConsignoCloudAPIType } from "../../index.js"
 
 import type { ConsignoCloudResponseWorkflow } from "./types.js"
 
+// eslint-disable-next-line jsdoc/require-jsdoc
 export async function getWorkflow(
   this: ConsignoCloudAPIType,
     workflowId: string

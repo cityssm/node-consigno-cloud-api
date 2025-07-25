@@ -44,3 +44,13 @@ export const AuthenticationMethodReference = {
   Secret: 'secret',
   SMS: 'sms'
 } as const
+
+export default {
+  ActionMode,
+  AuthenticationMethodReference,
+  CreateWorkflowStatus,
+  Language,
+  PDFAPolicy,
+  SignerType,
+  WorkflowStatus
+}

@@ -1,3 +1,4 @@
+// eslint-disable-next-line jsdoc/require-jsdoc
 export async function getWorkflow(workflowId) {
     await this.ensureActiveAuthToken();
     const response = await fetch(`${this.baseUrl}/workflows/${workflowId}`, {
