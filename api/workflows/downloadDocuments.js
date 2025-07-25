@@ -1,7 +1,7 @@
 // eslint-disable-next-line jsdoc/require-jsdoc
-export async function downloadAuditTrail(workflowId) {
+export async function downloadDocuments(workflowId) {
     await this.ensureActiveAuthToken();
-    const response = await fetch(`${this.baseUrl}/workflows/${workflowId}/audit`, {
+    const response = await fetch(`${this.baseUrl}/workflows/${workflowId}/documents`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -15,7 +15,8 @@ export async function downloadAuditTrail(workflowId) {
     }
     this.updateAuthTokenLastUsedMillis();
     return {
-        contentType: 'application/pdf',
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+        contentType: response.headers.get('Content-Type'),
         data: await response.arrayBuffer().then((buffer) => new Uint8Array(buffer))
     };
 }

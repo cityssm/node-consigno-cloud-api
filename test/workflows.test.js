@@ -26,10 +26,22 @@ await describe('ConsignoCloudAPI', async () => {
             baseUrl
         });
         const auditTrailPdf = await api.downloadAuditTrail(workflowId);
-        assert.ok(isPdf(auditTrailPdf));
+        assert.ok(isPdf(auditTrailPdf.data));
         const filePath = `./test/output/auditTrail.pdf`;
-        await fs.writeFile(filePath, auditTrailPdf);
+        await fs.writeFile(filePath, auditTrailPdf.data);
         debug(`Audit trail saved to ${filePath}`);
+    });
+    await it('should download workflow documents', async () => {
+        const api = new ConsignoCloudAPI({
+            apiKey,
+            apiSecret,
+            baseUrl
+        });
+        const { contentType, data } = await api.downloadDocuments(workflowId);
+        assert.ok(isPdf(data) || contentType === 'application/zip');
+        const filePath = `./test/output/documents.${contentType === 'application/pdf' ? 'pdf' : 'zip'}`;
+        await fs.writeFile(filePath, data);
+        debug(`Documents saved to ${filePath}`);
     });
     await it.skip('creates a workflow', async () => {
         const api = new ConsignoCloudAPI({

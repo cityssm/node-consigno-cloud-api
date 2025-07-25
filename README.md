@@ -42,6 +42,7 @@ const workflowData = await api.getWorkflow('workflowABC')
 
 - `getWorkflow(workflowId)`
 - `createWorkflow(workflowDefinition)`
+- `downloadDocuments(workflowId)`
 - `downloadAuditTrail(workflowId)`
 
 ## Related Projects

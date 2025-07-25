@@ -1,9 +1,11 @@
-import { createWorkflow } from "./workflows/createWorkflow.js";
-import { downloadAuditTrail } from "./workflows/downloadAuditTrail.js";
-import { getWorkflow } from "./workflows/getWorkflow.js";
+import { createWorkflow } from './workflows/createWorkflow.js';
+import { downloadAuditTrail } from './workflows/downloadAuditTrail.js';
+import { downloadDocuments } from './workflows/downloadDocuments.js';
+import { getWorkflow } from './workflows/getWorkflow.js';
 export declare const apiFunctions: {
     createWorkflow: typeof createWorkflow;
     downloadAuditTrail: typeof downloadAuditTrail;
+    downloadDocuments: typeof downloadDocuments;
     getWorkflow: typeof getWorkflow;
 };
 export interface ApiFunctionTypes {
@@ -23,6 +25,15 @@ export interface ApiFunctionTypes {
      * @throws Will throw an error if the fetch request fails.
      */
     getWorkflow: OmitThisParameter<typeof getWorkflow>;
+    /**
+     * Downloads documents associated with a workflow.
+     * @param workflowId The ID of the workflow for which to download documents.
+     * @returns A promise that resolves to an object containing the content type and data of the downloaded documents.
+     * @throws Will throw an error if the documents cannot be fetched.
+     * @throws Will throw an error if the authentication token is not valid or has expired.
+     * @throws Will throw an error if the fetch request fails.
+     */
+    downloadDocuments: OmitThisParameter<typeof downloadDocuments>;
     /**
      * Downloads the audit trail for a workflow.
      * @param workflowId The ID of the workflow for which to download the audit trail.
