@@ -1,6 +1,6 @@
 {
   "name": "@cityssm/consigno-cloud-api",
-  "version": "0.1.0",
+  "version": "0.1.0-dev",
   "description": "An unofficial wrapper around the ConsignO Cloud API.",
   "keywords": [
     "consigno"
