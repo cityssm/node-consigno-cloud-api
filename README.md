@@ -11,11 +11,8 @@ _Note that this project is not endorsed by Notarius._
 
 ## Installation
 
-When development is more complete, the package will be published on NPM.
-Until then, it can be installed from the GitHub repository.
-
-```sh
-npm install github:cityssm/node-consigno-cloud-api
+```bash
+npm install @cityssm/consigno-cloud-api
 ```
 
 ## Usage
