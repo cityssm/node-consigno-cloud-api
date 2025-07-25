@@ -30,6 +30,7 @@
     "debug": "^4.4.1"
   },
   "devDependencies": {
+    "@cityssm/is-pdf": "^2.0.0",
     "@types/debug": "^4.1.12",
     "@types/node": "^24.0.15",
     "eslint-config-cityssm": "^27.0.0",

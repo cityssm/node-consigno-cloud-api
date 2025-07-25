@@ -3,4 +3,5 @@ coverage/
 node_modules/
 
 test/config.*
-test/document.pdf
+test/input/
+test/output/

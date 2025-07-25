@@ -1,6 +1,8 @@
 import assert from 'node:assert'
+import fs from 'node:fs/promises'
 import { describe, it } from 'node:test'
 
+import isPdf from '@cityssm/is-pdf'
 import Debug from 'debug'
 
 import { DEBUG_ENABLE_NAMESPACES } from '../debug.config.js'
@@ -35,7 +37,25 @@ await describe('ConsignoCloudAPI', async () => {
     assert.strictEqual(workflow.response.id, workflowId)
   })
 
-  await it('creates a workflow', async () => {
+  await it('should retrieve a workflow audit trail', async () => {
+    const api = new ConsignoCloudAPI({
+      apiKey,
+      apiSecret,
+      baseUrl
+    })
+
+    const auditTrailPdf = await api.downloadAuditTrail(workflowId)
+
+    assert.ok(isPdf(auditTrailPdf))
+
+    const filePath = `./test/output/auditTrail.pdf`
+
+    await fs.writeFile(filePath, auditTrailPdf)
+    
+    debug(`Audit trail saved to ${filePath}`)
+  })
+
+  await it.skip('creates a workflow', async () => {
     const api = new ConsignoCloudAPI({
       apiKey,
       apiSecret,
