@@ -11,6 +11,17 @@ export async function fileToBase64(filePath: string): Promise<string> {
   return await fs.readFile(filePath, 'base64')
 }
 
+/**
+ * Validates a workflow ID.
+ * The ID should be a 24-character hexadecimal string.
+ * @param workflowId - The ID of the workflow to validate.
+ * @returns True if the workflow ID is valid, false otherwise.
+ */
+export function validateWorkflowId(workflowId: string): boolean {
+  return /^[a-f0-9]{24}$/.test(workflowId)
+}
+
 export default {
-  fileToBase64
+  fileToBase64,
+  validateWorkflowId
 }

@@ -1,4 +1,11 @@
+import Debug from 'debug'
+
+import { DEBUG_NAMESPACE } from '../../debug.config.js'
+import { type ConsignoCloudErrorJson, ConsignoCloudError } from '../../error.js'
 import type { ConsignoCloudAPIType } from '../../index.js'
+import { validateWorkflowId } from '../../utilities.js'
+
+const debug = Debug(`${DEBUG_NAMESPACE}:workflows:downloadDocuments`)
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 export async function downloadDocuments(
@@ -8,25 +15,35 @@ export async function downloadDocuments(
   contentType: 'application/pdf' | 'application/zip'
   data: Uint8Array
 }> {
+  if (!validateWorkflowId(workflowId)) {
+    throw new ConsignoCloudError({
+      code: 'INVALID_WORKFLOW_ID',
+      msg: 'Invalid workflow ID format',
+      parameters: { workflowId }
+    })
+  }
+
   await this.ensureActiveAuthToken()
 
-  const response = await fetch(
-    `${this.baseUrl}/workflows/${workflowId}/documents`,
-    {
-      method: 'POST',
+  const endpointUrl = `${this.baseUrl}/workflows/${workflowId}/documents`
 
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
+  debug('Endpoint URL:', endpointUrl)
 
-      body: new URLSearchParams({
-        'X-Auth-Token': this.authToken ?? ''
-      })
-    }
-  )
+  const response = await fetch(endpointUrl, {
+    method: 'POST',
+
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+
+    body: new URLSearchParams({
+      'X-Auth-Token': this.authToken ?? ''
+    })
+  })
 
   if (!response.ok) {
-    throw new Error('Failed to fetch audit trail')
+    const errorJson = (await response.json()) as ConsignoCloudErrorJson
+    throw new ConsignoCloudError(errorJson)
   }
 
   this.updateAuthTokenLastUsedMillis()

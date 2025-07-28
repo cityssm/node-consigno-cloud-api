@@ -2,6 +2,7 @@ import Debug from 'debug';
 import { apiFunctions } from './api/api.js';
 import { authTokenRefreshThresholdMillis, authTokenTimeoutMillis } from './constants.js';
 import { DEBUG_NAMESPACE } from './debug.config.js';
+import { ConsignoCloudError } from './error.js';
 const debug = Debug(`${DEBUG_NAMESPACE}:index`);
 // eslint-disable-next-line sonarjs/class-name
 class _ConsignoCloudAPI {
@@ -60,7 +61,6 @@ class _ConsignoCloudAPI {
                 authTokenTimeoutMillis - authTokenRefreshThresholdMillis) {
             return this;
         }
-        debug('Authenticating...');
         const headers = {
             'Content-Type': 'application/json'
         };
@@ -68,7 +68,9 @@ class _ConsignoCloudAPI {
             headers['X-Client-Id'] = this.#apiKey;
             headers['X-Client-Secret'] = this.#apiSecret;
         }
-        const response = await fetch(`${this.baseUrl}/auth/login`, {
+        const endpointUrl = `${this.baseUrl}/auth/login`;
+        debug('Endpoint URL:', endpointUrl);
+        const response = await fetch(endpointUrl, {
             headers,
             method: 'POST',
             body: JSON.stringify({
@@ -79,8 +81,8 @@ class _ConsignoCloudAPI {
             })
         });
         if (!response.ok) {
-            debug('Authentication failed:', await response.text());
-            throw new Error('Failed to authenticate');
+            const errorJson = (await response.json());
+            throw new ConsignoCloudError(errorJson);
         }
         this.#authToken = response.headers.get('X-Auth-Token') ?? undefined;
         return this;
@@ -88,5 +90,6 @@ class _ConsignoCloudAPI {
 }
 // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 export const ConsignoCloudAPI = _ConsignoCloudAPI;
+export { ConsignoCloudError } from './error.js';
 export { default as lookups } from './lookups.js';
 export { default as utilities } from './utilities.js';

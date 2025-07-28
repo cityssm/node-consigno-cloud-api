@@ -3,13 +3,13 @@ import fs from 'node:fs/promises';
 import { describe, it } from 'node:test';
 import isPdf from '@cityssm/is-pdf';
 import Debug from 'debug';
-import { DEBUG_ENABLE_NAMESPACES } from '../debug.config.js';
+import { DEBUG_ENABLE_NAMESPACES, DEBUG_NAMESPACE } from '../debug.config.js';
 import { ConsignoCloudAPI } from '../index.js';
-import { apiKey, apiSecret, baseUrl, createWorkflowDefinition, loginInPassword, loginInUserName, workflowId } from './config.js';
+import { apiKey, apiSecret, baseUrl, createWorkflowDefinition, invalidWorkflowId, loginInPassword, loginInUserName, workflowId } from './config.js';
 Debug.enable(DEBUG_ENABLE_NAMESPACES);
-const debug = Debug(`${DEBUG_ENABLE_NAMESPACES}:workflows:test`);
+const debug = Debug(`${DEBUG_NAMESPACE}:workflows:test`);
 await describe('ConsignoCloudAPI', async () => {
-    await it.skip('should retrieve a workflow', async () => {
+    await it('should retrieve a workflow', async () => {
         const api = new ConsignoCloudAPI({
             apiKey,
             apiSecret,
@@ -18,6 +18,19 @@ await describe('ConsignoCloudAPI', async () => {
         const workflow = await api.getWorkflow(workflowId);
         debug(workflow);
         assert.strictEqual(workflow.response.id, workflowId);
+    });
+    await it('should throw an error when a workflow is not found', async () => {
+        const api = new ConsignoCloudAPI({
+            apiKey,
+            apiSecret,
+            baseUrl
+        });
+        await assert.rejects(async () => {
+            await api.getWorkflow(invalidWorkflowId);
+        }, {
+            errorCode: 'INVALID_WORKFLOW_ID',
+            name: 'ConsignoCloudError'
+        });
     });
     await it('should retrieve a workflow audit trail', async () => {
         const api = new ConsignoCloudAPI({

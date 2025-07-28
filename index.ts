@@ -6,6 +6,7 @@ import {
   authTokenTimeoutMillis
 } from './constants.js'
 import { DEBUG_NAMESPACE } from './debug.config.js'
+import { type ConsignoCloudErrorJson, ConsignoCloudError } from './error.js'
 
 const debug = Debug(`${DEBUG_NAMESPACE}:index`)
 
@@ -92,8 +93,6 @@ class _ConsignoCloudAPI {
       return this
     }
 
-    debug('Authenticating...')
-
     const headers = {
       'Content-Type': 'application/json'
     }
@@ -103,7 +102,11 @@ class _ConsignoCloudAPI {
       headers['X-Client-Secret'] = this.#apiSecret
     }
 
-    const response = await fetch(`${this.baseUrl}/auth/login`, {
+    const endpointUrl = `${this.baseUrl}/auth/login`
+
+    debug('Endpoint URL:', endpointUrl)
+
+    const response = await fetch(endpointUrl, {
       headers,
       method: 'POST',
 
@@ -119,8 +122,8 @@ class _ConsignoCloudAPI {
     })
 
     if (!response.ok) {
-      debug('Authentication failed:', await response.text())
-      throw new Error('Failed to authenticate')
+      const errorJson = (await response.json()) as ConsignoCloudErrorJson
+          throw new ConsignoCloudError(errorJson)
     }
 
     this.#authToken = response.headers.get('X-Auth-Token') ?? undefined
@@ -136,6 +139,8 @@ export type ConsignoCloudAPIType = ApiFunctionTypes &
 export const ConsignoCloudAPI = _ConsignoCloudAPI as unknown as new (
   apiConfig: ConsignoCloudAPIConfig
 ) => ConsignoCloudAPIType
+
+export { ConsignoCloudError } from './error.js'
 
 export { default as lookups } from './lookups.js'
 

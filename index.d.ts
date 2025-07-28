@@ -28,5 +28,6 @@ declare class _ConsignoCloudAPI {
 }
 export type ConsignoCloudAPIType = ApiFunctionTypes & InstanceType<typeof _ConsignoCloudAPI>;
 export declare const ConsignoCloudAPI: new (apiConfig: ConsignoCloudAPIConfig) => ConsignoCloudAPIType;
+export { ConsignoCloudError } from './error.js';
 export { default as lookups } from './lookups.js';
 export { default as utilities } from './utilities.js';

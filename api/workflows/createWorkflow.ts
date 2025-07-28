@@ -4,6 +4,7 @@
 import Debug from 'debug'
 
 import { DEBUG_NAMESPACE } from '../../debug.config.js'
+import { type ConsignoCloudErrorJson, ConsignoCloudError } from '../../error.js'
 import type { ConsignoCloudAPIType } from '../../index.js'
 import type {
   ActionMode,
@@ -16,7 +17,7 @@ import type {
 
 import type { ConsignoCloudResponseWorkflow } from './types.js'
 
-const debug = Debug(`${DEBUG_NAMESPACE}:createWorkflow`)
+const debug = Debug(`${DEBUG_NAMESPACE}:workflows:createWorkflow`)
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 export async function createWorkflow(
@@ -25,7 +26,11 @@ export async function createWorkflow(
 ): Promise<ConsignoCloudResponseWorkflow> {
   await this.ensureActiveAuthToken()
 
-  const response = await fetch(`${this.baseUrl}/workflows`, {
+  const endpointUrl = `${this.baseUrl}/workflows`
+
+  debug('Endpoint URL:', endpointUrl)
+
+  const response = await fetch(endpointUrl, {
     method: 'POST',
 
     headers: {
@@ -37,8 +42,8 @@ export async function createWorkflow(
   })
 
   if (!response.ok) {
-    debug('Failed to create workflow:', await response.text())
-    throw new Error('Failed to create workflow')
+    const errorJson = (await response.json()) as ConsignoCloudErrorJson
+    throw new ConsignoCloudError(errorJson)
   }
 
   this.updateAuthTokenLastUsedMillis()
