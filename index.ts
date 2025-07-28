@@ -123,7 +123,7 @@ class _ConsignoCloudAPI {
 
     if (!response.ok) {
       const errorJson = (await response.json()) as ConsignoCloudErrorJson
-          throw new ConsignoCloudError(errorJson)
+      throw new ConsignoCloudError(errorJson)
     }
 
     this.#authToken = response.headers.get('X-Auth-Token') ?? undefined
