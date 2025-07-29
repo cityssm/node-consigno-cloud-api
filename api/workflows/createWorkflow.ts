@@ -54,6 +54,10 @@ export async function createWorkflow(
 
 interface Document_UploadAsData {
   name: string
+
+  /**
+   * The content of the document, base64 encoded.
+   */
   data: string
 }
 

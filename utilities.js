@@ -10,6 +10,18 @@ export async function fileToBase64(filePath) {
     return await fs.readFile(filePath, 'base64');
 }
 /**
+ * Converts a Uint8Array to a base64 string.
+ * @param data - The Uint8Array data to convert to a base64 string.
+ * @returns The base64 encoded string.
+ */
+export function uintArrayToBase64(data) {
+    let binary = '';
+    for (const datum of data) {
+        binary += String.fromCodePoint(datum);
+    }
+    return Buffer.from(binary, 'binary').toString('base64');
+}
+/**
  * Validates a workflow ID.
  * The ID should be a 24-character hexadecimal string.
  * @param workflowId - The ID of the workflow to validate.
@@ -20,5 +32,6 @@ export function validateWorkflowId(workflowId) {
 }
 export default {
     fileToBase64,
+    uintArrayToBase64,
     validateWorkflowId
 };

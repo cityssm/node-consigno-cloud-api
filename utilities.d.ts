@@ -6,6 +6,12 @@
  */
 export declare function fileToBase64(filePath: string): Promise<string>;
 /**
+ * Converts a Uint8Array to a base64 string.
+ * @param data - The Uint8Array data to convert to a base64 string.
+ * @returns The base64 encoded string.
+ */
+export declare function uintArrayToBase64(data: Uint8Array): string;
+/**
  * Validates a workflow ID.
  * The ID should be a 24-character hexadecimal string.
  * @param workflowId - The ID of the workflow to validate.
@@ -14,6 +20,7 @@ export declare function fileToBase64(filePath: string): Promise<string>;
 export declare function validateWorkflowId(workflowId: string): boolean;
 declare const _default: {
     fileToBase64: typeof fileToBase64;
+    uintArrayToBase64: typeof uintArrayToBase64;
     validateWorkflowId: typeof validateWorkflowId;
 };
 export default _default;

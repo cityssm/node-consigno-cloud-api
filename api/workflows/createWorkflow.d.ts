@@ -4,6 +4,9 @@ import type { ConsignoCloudResponseWorkflow } from './types.js';
 export declare function createWorkflow(this: ConsignoCloudAPIType, workflowDefinition: CreateWorkflowRequest): Promise<ConsignoCloudResponseWorkflow>;
 interface Document_UploadAsData {
     name: string;
+    /**
+     * The content of the document, base64 encoded.
+     */
     data: string;
 }
 interface Document_PreviouslyUploaded {
