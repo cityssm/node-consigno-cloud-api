@@ -89,6 +89,22 @@ interface SignerAndContact_AMR_NoSecret {
   >
 }
 
+export interface CreateWorkflowAnchor {
+  tag: string
+  xOffset: number
+  yOffset: number
+
+  /** Default = 165 */
+  height?: number
+  /* Default = 37 */
+  width?: number
+
+  assignedTo: `${number}`
+  page: string
+
+  skipIfNotFound?: boolean
+}
+
 export interface CreateWorkflowRequest {
   name: string
   expiresOn: `${number}-${number}-${number}` | number
@@ -109,21 +125,7 @@ export interface CreateWorkflowRequest {
         page: string
       }>
 
-      anchors?: Array<{
-        tag: string
-        xOffset: number
-        yOffset: number
-
-        /** Default = 165 */
-        height?: number
-        /* Default = 37 */
-        width?: number
-
-        assignedTo: `${number}`
-        page: string
-
-        skipIfNotFound?: boolean
-      }>
+      anchors?: CreateWorkflowAnchor[]
     }
   >
 

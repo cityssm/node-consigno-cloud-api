@@ -25,6 +25,17 @@ interface SignerAndContact_AMR_Secret {
 interface SignerAndContact_AMR_NoSecret {
     amr: Array<Exclude<(typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference], 'secret'>>;
 }
+export interface CreateWorkflowAnchor {
+    tag: string;
+    xOffset: number;
+    yOffset: number;
+    /** Default = 165 */
+    height?: number;
+    width?: number;
+    assignedTo: `${number}`;
+    page: string;
+    skipIfNotFound?: boolean;
+}
 export interface CreateWorkflowRequest {
     name: string;
     expiresOn: `${number}-${number}-${number}` | number;
@@ -39,17 +50,7 @@ export interface CreateWorkflowRequest {
             assignedTo: `${number}`;
             page: string;
         }>;
-        anchors?: Array<{
-            tag: string;
-            xOffset: number;
-            yOffset: number;
-            /** Default = 165 */
-            height?: number;
-            width?: number;
-            assignedTo: `${number}`;
-            page: string;
-            skipIfNotFound?: boolean;
-        }>;
+        anchors?: CreateWorkflowAnchor[];
     }>;
     /** 0 = create, 1 = create and launch */
     status: (typeof CreateWorkflowStatus)[keyof typeof CreateWorkflowStatus];

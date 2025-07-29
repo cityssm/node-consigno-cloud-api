@@ -12,11 +12,14 @@ class _ConsignoCloudAPI {
     #loginAs;
     #authToken;
     #authTokenLastUsedMillis = 0;
-    constructor(apiConfig) {
+    constructor(apiConfig, loginAs) {
         this.#baseUrl = apiConfig.baseUrl;
         this.#apiKey = apiConfig.apiKey;
         this.#apiSecret = apiConfig.apiSecret;
         Object.assign(this, apiFunctions);
+        if (loginAs !== undefined) {
+            this.setLoginAs(loginAs.userName, loginAs.password);
+        }
     }
     clearAuthToken() {
         this.#authToken = undefined;

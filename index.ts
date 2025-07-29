@@ -10,15 +10,17 @@ import { type ConsignoCloudErrorJson, ConsignoCloudError } from './error.js'
 
 const debug = Debug(`${DEBUG_NAMESPACE}:index`)
 
+export type ConsignoCloudAPIBaseUrl = `https://${string}/api/v1`
+
 export interface ConsignoCloudAPIConfig {
   apiKey: string
   apiSecret: string
-  baseUrl: `https://${string}/api/v1`
+  baseUrl: ConsignoCloudAPIBaseUrl
 }
 
 // eslint-disable-next-line sonarjs/class-name
 class _ConsignoCloudAPI {
-  readonly #baseUrl: `https://${string}/api/v1`
+  readonly #baseUrl: ConsignoCloudAPIBaseUrl
 
   readonly #apiKey: string
   readonly #apiSecret: string
@@ -33,12 +35,22 @@ class _ConsignoCloudAPI {
   #authToken: string | undefined
   #authTokenLastUsedMillis = 0
 
-  constructor(apiConfig: ConsignoCloudAPIConfig) {
+  constructor(
+    apiConfig: ConsignoCloudAPIConfig,
+    loginAs?: {
+      password: string
+      userName: string
+    }
+  ) {
     this.#baseUrl = apiConfig.baseUrl
     this.#apiKey = apiConfig.apiKey
     this.#apiSecret = apiConfig.apiSecret
 
     Object.assign(this, apiFunctions)
+
+    if (loginAs !== undefined) {
+      this.setLoginAs(loginAs.userName, loginAs.password)
+    }
   }
 
   clearAuthToken(): this {
@@ -142,7 +154,10 @@ export const ConsignoCloudAPI = _ConsignoCloudAPI as unknown as new (
 
 export { ConsignoCloudError } from './error.js'
 
-export type { CreateWorkflowRequest } from './api/workflows/createWorkflow.js'
+export type {
+  CreateWorkflowAnchor,
+  CreateWorkflowRequest
+} from './api/workflows/createWorkflow.js'
 
 export { default as lookups } from './lookups.js'
 

@@ -1,12 +1,16 @@
 import { type ApiFunctionTypes } from './api/api.js';
+export type ConsignoCloudAPIBaseUrl = `https://${string}/api/v1`;
 export interface ConsignoCloudAPIConfig {
     apiKey: string;
     apiSecret: string;
-    baseUrl: `https://${string}/api/v1`;
+    baseUrl: ConsignoCloudAPIBaseUrl;
 }
 declare class _ConsignoCloudAPI {
     #private;
-    constructor(apiConfig: ConsignoCloudAPIConfig);
+    constructor(apiConfig: ConsignoCloudAPIConfig, loginAs?: {
+        password: string;
+        userName: string;
+    });
     clearAuthToken(): this;
     get authToken(): string | undefined;
     get baseUrl(): `https://${string}/api/v1`;
@@ -29,6 +33,6 @@ declare class _ConsignoCloudAPI {
 export type ConsignoCloudAPIType = ApiFunctionTypes & InstanceType<typeof _ConsignoCloudAPI>;
 export declare const ConsignoCloudAPI: new (apiConfig: ConsignoCloudAPIConfig) => ConsignoCloudAPIType;
 export { ConsignoCloudError } from './error.js';
-export type { CreateWorkflowRequest } from './api/workflows/createWorkflow.js';
+export type { CreateWorkflowAnchor, CreateWorkflowRequest } from './api/workflows/createWorkflow.js';
 export { default as lookups } from './lookups.js';
 export { default as utilities } from './utilities.js';
