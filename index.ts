@@ -142,6 +142,8 @@ export const ConsignoCloudAPI = _ConsignoCloudAPI as unknown as new (
 
 export { ConsignoCloudError } from './error.js'
 
+export type { CreateWorkflowRequest } from './api/workflows/createWorkflow.js'
+
 export { default as lookups } from './lookups.js'
 
 export { default as utilities } from './utilities.js'

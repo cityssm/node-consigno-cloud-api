@@ -105,13 +105,12 @@ export interface CreateWorkflowRequest {
         /* Default = 37 */
         width?: number
 
-        page: string
         assignedTo: `${number}`
+        page: string
       }>
 
       anchors?: Array<{
         tag: string
-        assignedTo: `${number}`
         xOffset: number
         yOffset: number
 
@@ -120,7 +119,9 @@ export interface CreateWorkflowRequest {
         /* Default = 37 */
         width?: number
 
+        assignedTo: `${number}`
         page: string
+
         skipIfNotFound?: boolean
       }>
     }

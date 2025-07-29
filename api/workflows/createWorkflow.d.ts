@@ -36,17 +36,17 @@ export interface CreateWorkflowRequest {
             /** Default = 165 */
             height?: number;
             width?: number;
-            page: string;
             assignedTo: `${number}`;
+            page: string;
         }>;
         anchors?: Array<{
             tag: string;
-            assignedTo: `${number}`;
             xOffset: number;
             yOffset: number;
             /** Default = 165 */
             height?: number;
             width?: number;
+            assignedTo: `${number}`;
             page: string;
             skipIfNotFound?: boolean;
         }>;
