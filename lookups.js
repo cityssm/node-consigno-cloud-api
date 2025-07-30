@@ -9,7 +9,8 @@ export const WorkflowStatus = {
     2: 'Completed',
     3: 'Expired',
     4: 'Created from Template, Not Launched',
-    5: 'Declined'
+    5: 'Declined',
+    6: 'Deleted'
 };
 export const CreateWorkflowStatus = {
     Create: 0,

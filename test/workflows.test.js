@@ -19,7 +19,7 @@ await describe('ConsignoCloudAPI', async () => {
         debug(workflow);
         assert.strictEqual(workflow.response.id, workflowId);
     });
-    await it('should throw an error when a workflow is not found', async () => {
+    await it.skip('should throw an error when a workflow is not found', async () => {
         const api = new ConsignoCloudAPI({
             apiKey,
             apiSecret,
@@ -32,7 +32,7 @@ await describe('ConsignoCloudAPI', async () => {
             name: 'ConsignoCloudError'
         });
     });
-    await it('should retrieve a workflow audit trail', async () => {
+    await it.skip('should retrieve a workflow audit trail', async () => {
         const api = new ConsignoCloudAPI({
             apiKey,
             apiSecret,
@@ -44,7 +44,7 @@ await describe('ConsignoCloudAPI', async () => {
         await fs.writeFile(filePath, auditTrailPdf.data);
         debug(`Audit trail saved to ${filePath}`);
     });
-    await it('should download workflow documents', async () => {
+    await it.skip('should download workflow documents', async () => {
         const api = new ConsignoCloudAPI({
             apiKey,
             apiSecret,

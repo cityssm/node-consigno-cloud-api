@@ -10,6 +10,7 @@ export declare const WorkflowStatus: {
     readonly 3: "Expired";
     readonly 4: "Created from Template, Not Launched";
     readonly 5: "Declined";
+    readonly 6: "Deleted";
 };
 export declare const CreateWorkflowStatus: {
     readonly Create: 0;
@@ -78,6 +79,7 @@ declare const _default: {
         readonly 3: "Expired";
         readonly 4: "Created from Template, Not Launched";
         readonly 5: "Declined";
+        readonly 6: "Deleted";
     };
 };
 export default _default;
