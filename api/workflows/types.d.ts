@@ -1,4 +1,4 @@
-import type { ActionMode, AuthenticationMethodReference, Language, SignerType } from '../../lookups.js';
+import type { ActionMode, AuthenticationMethodReference, Language, SignerType, WorkflowStatus } from '../../lookups.js';
 type ActionStatus = 'COMPLETED' | 'DECLINED' | 'IN_PROGRESS' | 'NOT_STARTED' | 'STARTED';
 export interface ConsignoCloudResponseWorkflow {
     msg: string;
@@ -7,7 +7,7 @@ export interface ConsignoCloudResponseWorkflow {
         id: string;
         version: number;
         name: string;
-        status: 0 | 1 | 2 | 3 | 4 | 5;
+        status: keyof typeof WorkflowStatus;
         documents: Array<{
             documentId: string;
             name: FunctionStringCallback;

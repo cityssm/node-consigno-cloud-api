@@ -2,7 +2,8 @@ import type {
   ActionMode,
   AuthenticationMethodReference,
   Language,
-  SignerType
+  SignerType,
+  WorkflowStatus
 } from '../../lookups.js'
 
 type ActionStatus =
@@ -20,7 +21,8 @@ export interface ConsignoCloudResponseWorkflow {
     id: string
     version: number
     name: string
-    status: 0 | 1 | 2 | 3 | 4 | 5
+
+    status: keyof typeof WorkflowStatus
 
     documents: Array<{
       documentId: string
@@ -33,7 +35,7 @@ export interface ConsignoCloudResponseWorkflow {
 
         width: number
         height: number
-        
+
         assignedTo: string
         name: string
         visible: boolean
