@@ -1,9 +1,42 @@
-export const PDFAPolicy = {
+/*
+ * Request Lookups
+ */
+export const PDFAPolicies = {
     None: 0,
     Preferred: 1,
     Mandatory: 2
 };
-export const WorkflowStatus = {
+export const CreateWorkflowStatuses = {
+    Create: 0,
+    CreateAndLaunch: 1
+};
+export const ActionModes = {
+    Embedded: 'embedded',
+    Remote: 'remote'
+};
+export const Languages = {
+    English: 'en',
+    French: 'fr'
+};
+export const SignerTypes = {
+    Approver: 'approver',
+    Certifio: 'certifio',
+    CertifioCloud: 'certifiocloud',
+    Esig: 'esig',
+    Freezone: 'freezone'
+};
+export const AuthenticationMethodReferences = {
+    Call: 'call',
+    CertifioCloud: 'certifiocloud',
+    Link: 'link',
+    SAML: 'saml',
+    Secret: 'secret',
+    SMS: 'sms'
+};
+/*
+ * Response Lookups
+ */
+export const WorkflowStatuses = {
     0: 'Created, Not Launched',
     1: 'Launched, In Progress',
     2: 'Completed',
@@ -12,39 +45,15 @@ export const WorkflowStatus = {
     5: 'Declined',
     6: 'Deleted'
 };
-export const CreateWorkflowStatus = {
-    Create: 0,
-    CreateAndLaunch: 1
-};
-export const ActionMode = {
-    Embedded: 'embedded',
-    Remote: 'remote'
-};
-export const Language = {
-    English: 'en',
-    French: 'fr'
-};
-export const SignerType = {
-    Approver: 'approver',
-    Certifio: 'certifio',
-    CertifioCloud: 'certifiocloud',
-    Esig: 'esig',
-    Freezone: 'freezone'
-};
-export const AuthenticationMethodReference = {
-    Call: 'call',
-    CertifioCloud: 'certifiocloud',
-    Link: 'link',
-    SAML: 'saml',
-    Secret: 'secret',
-    SMS: 'sms'
-};
+/*
+ * Export all lookups
+ */
 export default {
-    ActionMode,
-    AuthenticationMethodReference,
-    CreateWorkflowStatus,
-    Language,
-    PDFAPolicy,
-    SignerType,
-    WorkflowStatus
+    ActionModes,
+    AuthenticationMethodReferences,
+    CreateWorkflowStatuses,
+    Languages,
+    PDFAPolicies,
+    SignerTypes,
+    WorkflowStatuses
 };

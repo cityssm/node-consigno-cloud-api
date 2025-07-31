@@ -1,4 +1,4 @@
-import type { ActionMode, AuthenticationMethodReference, Language, SignerType, WorkflowStatus } from '../../lookups.js';
+import type { ActionModes, AuthenticationMethodReferences, Languages, SignerTypes, WorkflowStatuses } from '../../lookups.js';
 type ActionStatus = 'COMPLETED' | 'DECLINED' | 'IN_PROGRESS' | 'NOT_STARTED' | 'STARTED';
 export interface ConsignoCloudResponseWorkflow {
     msg: string;
@@ -7,7 +7,7 @@ export interface ConsignoCloudResponseWorkflow {
         id: string;
         version: number;
         name: string;
-        status: keyof typeof WorkflowStatus;
+        status: keyof typeof WorkflowStatuses;
         documents: Array<{
             documentId: string;
             name: FunctionStringCallback;
@@ -55,13 +55,13 @@ export interface ConsignoCloudResponseWorkflow {
             id: string;
             step: number;
             signer: {
-                type: (typeof SignerType)[keyof typeof SignerType];
+                type: (typeof SignerTypes)[keyof typeof SignerTypes];
                 firstName: string;
                 lastName: string;
                 email: string;
                 phone: string;
-                amr: Array<(typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference]>;
-                lang: (typeof Language)[keyof typeof Language];
+                amr: Array<(typeof AuthenticationMethodReferences)[keyof typeof AuthenticationMethodReferences]>;
+                lang: (typeof Languages)[keyof typeof Languages];
                 contactOwner: string;
                 placeHolder: boolean;
                 generated: boolean;
@@ -69,8 +69,8 @@ export interface ConsignoCloudResponseWorkflow {
             };
             status: ActionStatus;
             statusDate: string;
-            mode: (typeof ActionMode)[keyof typeof ActionMode];
-            secondFactorUsed: Array<'none' | (typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference]>;
+            mode: (typeof ActionModes)[keyof typeof ActionModes];
+            secondFactorUsed: Array<'none' | (typeof AuthenticationMethodReferences)[keyof typeof AuthenticationMethodReferences]>;
             declineReason: unknown;
         }>;
         statusDate: string;

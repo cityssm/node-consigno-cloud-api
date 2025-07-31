@@ -1,5 +1,5 @@
 import type { ConsignoCloudAPIType } from '../../index.js';
-import type { ActionMode, AuthenticationMethodReference, CreateWorkflowStatus, Language, PDFAPolicy, SignerType } from '../../lookups.js';
+import type { ActionModes, AuthenticationMethodReferences, CreateWorkflowStatuses, Languages, PDFAPolicies, SignerTypes } from '../../lookups.js';
 import type { ConsignoCloudResponseWorkflow } from './types.js';
 export declare function createWorkflow(this: ConsignoCloudAPIType, workflowDefinition: CreateWorkflowRequest): Promise<ConsignoCloudResponseWorkflow>;
 interface Document_UploadAsData {
@@ -17,16 +17,16 @@ interface Signer_Type_Certifio {
     subjectDN: string;
 }
 interface Signer_Type_Other {
-    type: Exclude<(typeof SignerType)[keyof typeof SignerType], 'certifio'>;
+    type: Exclude<(typeof SignerTypes)[keyof typeof SignerTypes], 'certifio'>;
 }
 interface SignerAndContact_AMR_Secret {
-    amr: Array<(typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference]>;
+    amr: Array<(typeof AuthenticationMethodReferences)[keyof typeof AuthenticationMethodReferences]>;
     secretQuestion: string;
     secretAnswer: string;
     isSecretAnswerChanged: true;
 }
 interface SignerAndContact_AMR_NoSecret {
-    amr: Array<Exclude<(typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference], 'secret'>>;
+    amr: Array<Exclude<(typeof AuthenticationMethodReferences)[keyof typeof AuthenticationMethodReferences], 'secret'>>;
 }
 export interface CreateWorkflowAnchor {
     tag: string;
@@ -42,7 +42,7 @@ export interface CreateWorkflowAnchor {
 export interface CreateWorkflowRequest {
     name: string;
     expiresOn: `${number}-${number}-${number}` | number;
-    pdfaPolicy: (typeof PDFAPolicy)[keyof typeof PDFAPolicy];
+    pdfaPolicy: (typeof PDFAPolicies)[keyof typeof PDFAPolicies];
     documents: Array<(Document_PreviouslyUploaded | Document_UploadAsData) & {
         fields?: Array<{
             x: number;
@@ -56,9 +56,9 @@ export interface CreateWorkflowRequest {
         anchors?: CreateWorkflowAnchor[];
     }>;
     /** 0 = create, 1 = create and launch */
-    status: (typeof CreateWorkflowStatus)[keyof typeof CreateWorkflowStatus];
+    status: (typeof CreateWorkflowStatuses)[keyof typeof CreateWorkflowStatuses];
     actions: Array<{
-        mode?: (typeof ActionMode)[keyof typeof ActionMode];
+        mode?: (typeof ActionModes)[keyof typeof ActionModes];
         returnUrl?: string;
         zoneLabel: string;
         step: number;
@@ -68,7 +68,7 @@ export interface CreateWorkflowRequest {
             lastName: string;
             email: string;
             phone: string;
-            lang?: (typeof Language)[keyof typeof Language];
+            lang?: (typeof Languages)[keyof typeof Languages];
             clientUserId?: string;
             role?: string;
             placeHolder?: boolean;
@@ -80,7 +80,7 @@ export interface CreateWorkflowRequest {
             lastName: string;
             email: string;
             phone: string;
-            lang?: (typeof Language)[keyof typeof Language];
+            lang?: (typeof Languages)[keyof typeof Languages];
         };
     }>;
     webhooks?: Array<{

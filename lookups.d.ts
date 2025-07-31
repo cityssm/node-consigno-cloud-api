@@ -1,9 +1,36 @@
-export declare const PDFAPolicy: {
+export declare const PDFAPolicies: {
     readonly None: 0;
     readonly Preferred: 1;
     readonly Mandatory: 2;
 };
-export declare const WorkflowStatus: {
+export declare const CreateWorkflowStatuses: {
+    readonly Create: 0;
+    readonly CreateAndLaunch: 1;
+};
+export declare const ActionModes: {
+    readonly Embedded: "embedded";
+    readonly Remote: "remote";
+};
+export declare const Languages: {
+    readonly English: "en";
+    readonly French: "fr";
+};
+export declare const SignerTypes: {
+    readonly Approver: "approver";
+    readonly Certifio: "certifio";
+    readonly CertifioCloud: "certifiocloud";
+    readonly Esig: "esig";
+    readonly Freezone: "freezone";
+};
+export declare const AuthenticationMethodReferences: {
+    readonly Call: "call";
+    readonly CertifioCloud: "certifiocloud";
+    readonly Link: "link";
+    readonly SAML: "saml";
+    readonly Secret: "secret";
+    readonly SMS: "sms";
+};
+export declare const WorkflowStatuses: {
     readonly 0: "Created, Not Launched";
     readonly 1: "Launched, In Progress";
     readonly 2: "Completed";
@@ -12,39 +39,12 @@ export declare const WorkflowStatus: {
     readonly 5: "Declined";
     readonly 6: "Deleted";
 };
-export declare const CreateWorkflowStatus: {
-    readonly Create: 0;
-    readonly CreateAndLaunch: 1;
-};
-export declare const ActionMode: {
-    readonly Embedded: "embedded";
-    readonly Remote: "remote";
-};
-export declare const Language: {
-    readonly English: "en";
-    readonly French: "fr";
-};
-export declare const SignerType: {
-    readonly Approver: "approver";
-    readonly Certifio: "certifio";
-    readonly CertifioCloud: "certifiocloud";
-    readonly Esig: "esig";
-    readonly Freezone: "freezone";
-};
-export declare const AuthenticationMethodReference: {
-    readonly Call: "call";
-    readonly CertifioCloud: "certifiocloud";
-    readonly Link: "link";
-    readonly SAML: "saml";
-    readonly Secret: "secret";
-    readonly SMS: "sms";
-};
 declare const _default: {
-    ActionMode: {
+    ActionModes: {
         readonly Embedded: "embedded";
         readonly Remote: "remote";
     };
-    AuthenticationMethodReference: {
+    AuthenticationMethodReferences: {
         readonly Call: "call";
         readonly CertifioCloud: "certifiocloud";
         readonly Link: "link";
@@ -52,27 +52,27 @@ declare const _default: {
         readonly Secret: "secret";
         readonly SMS: "sms";
     };
-    CreateWorkflowStatus: {
+    CreateWorkflowStatuses: {
         readonly Create: 0;
         readonly CreateAndLaunch: 1;
     };
-    Language: {
+    Languages: {
         readonly English: "en";
         readonly French: "fr";
     };
-    PDFAPolicy: {
+    PDFAPolicies: {
         readonly None: 0;
         readonly Preferred: 1;
         readonly Mandatory: 2;
     };
-    SignerType: {
+    SignerTypes: {
         readonly Approver: "approver";
         readonly Certifio: "certifio";
         readonly CertifioCloud: "certifiocloud";
         readonly Esig: "esig";
         readonly Freezone: "freezone";
     };
-    WorkflowStatus: {
+    WorkflowStatuses: {
         readonly 0: "Created, Not Launched";
         readonly 1: "Launched, In Progress";
         readonly 2: "Completed";

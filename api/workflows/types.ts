@@ -1,9 +1,9 @@
 import type {
-  ActionMode,
-  AuthenticationMethodReference,
-  Language,
-  SignerType,
-  WorkflowStatus
+  ActionModes,
+  AuthenticationMethodReferences,
+  Languages,
+  SignerTypes,
+  WorkflowStatuses
 } from '../../lookups.js'
 
 type ActionStatus =
@@ -22,7 +22,7 @@ export interface ConsignoCloudResponseWorkflow {
     version: number
     name: string
 
-    status: keyof typeof WorkflowStatus
+    status: keyof typeof WorkflowStatuses
 
     documents: Array<{
       documentId: string
@@ -85,17 +85,18 @@ export interface ConsignoCloudResponseWorkflow {
       step: number
 
       signer: {
-        type: (typeof SignerType)[keyof typeof SignerType]
+        type: (typeof SignerTypes)[keyof typeof SignerTypes]
 
         firstName: string
         lastName: string
+
         email: string
         phone: string
 
         amr: Array<
-          (typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference]
+          (typeof AuthenticationMethodReferences)[keyof typeof AuthenticationMethodReferences]
         >
-        lang: (typeof Language)[keyof typeof Language]
+        lang: (typeof Languages)[keyof typeof Languages]
         contactOwner: string
         placeHolder: boolean
         generated: boolean
@@ -106,31 +107,35 @@ export interface ConsignoCloudResponseWorkflow {
 
       statusDate: string
 
-      mode: (typeof ActionMode)[keyof typeof ActionMode]
+      mode: (typeof ActionModes)[keyof typeof ActionModes]
       secondFactorUsed: Array<
         | 'none'
-        | (typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference]
+        | (typeof AuthenticationMethodReferences)[keyof typeof AuthenticationMethodReferences]
       >
 
       declineReason: unknown
     }>
 
     statusDate: string
+
     ownerLastName: string
     ownerEmail: string
     organizationId: string
     identificationText: string
+
     personWithUndownloadedFinalDocuments: Array<{
       email: string
       firstName: string
       lastName: string
     }>
+
     hasOwnerDownloadedFinalDocuments: boolean
     personWithDownloadedFinalDocuments: Array<{
       email: string
       firstName: string
       lastName: string
     }>
+
     personWithDownloadedAuditTrail: Array<{
       email: string
       firstName: string

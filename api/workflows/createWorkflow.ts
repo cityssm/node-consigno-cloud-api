@@ -7,12 +7,12 @@ import { DEBUG_NAMESPACE } from '../../debug.config.js'
 import { type ConsignoCloudErrorJson, ConsignoCloudError } from '../../error.js'
 import type { ConsignoCloudAPIType } from '../../index.js'
 import type {
-  ActionMode,
-  AuthenticationMethodReference,
-  CreateWorkflowStatus,
-  Language,
-  PDFAPolicy,
-  SignerType
+  ActionModes,
+  AuthenticationMethodReferences,
+  CreateWorkflowStatuses,
+  Languages,
+  PDFAPolicies,
+  SignerTypes
 } from '../../lookups.js'
 
 import type { ConsignoCloudResponseWorkflow } from './types.js'
@@ -71,12 +71,12 @@ interface Signer_Type_Certifio {
 }
 
 interface Signer_Type_Other {
-  type: Exclude<(typeof SignerType)[keyof typeof SignerType], 'certifio'>
+  type: Exclude<(typeof SignerTypes)[keyof typeof SignerTypes], 'certifio'>
 }
 
 interface SignerAndContact_AMR_Secret {
   amr: Array<
-    (typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference]
+    (typeof AuthenticationMethodReferences)[keyof typeof AuthenticationMethodReferences]
   >
   secretQuestion: string
   secretAnswer: string
@@ -87,7 +87,7 @@ interface SignerAndContact_AMR_Secret {
 interface SignerAndContact_AMR_NoSecret {
   amr: Array<
     Exclude<
-      (typeof AuthenticationMethodReference)[keyof typeof AuthenticationMethodReference],
+      (typeof AuthenticationMethodReferences)[keyof typeof AuthenticationMethodReferences],
       'secret'
     >
   >
@@ -112,7 +112,7 @@ export interface CreateWorkflowAnchor {
 export interface CreateWorkflowRequest {
   name: string
   expiresOn: `${number}-${number}-${number}` | number
-  pdfaPolicy: (typeof PDFAPolicy)[keyof typeof PDFAPolicy]
+  pdfaPolicy: (typeof PDFAPolicies)[keyof typeof PDFAPolicies]
 
   documents: Array<
     (Document_PreviouslyUploaded | Document_UploadAsData) & {
@@ -134,10 +134,10 @@ export interface CreateWorkflowRequest {
   >
 
   /** 0 = create, 1 = create and launch */
-  status: (typeof CreateWorkflowStatus)[keyof typeof CreateWorkflowStatus]
+  status: (typeof CreateWorkflowStatuses)[keyof typeof CreateWorkflowStatuses]
 
   actions: Array<{
-    mode?: (typeof ActionMode)[keyof typeof ActionMode]
+    mode?: (typeof ActionModes)[keyof typeof ActionModes]
 
     returnUrl?: string
     zoneLabel: string
@@ -154,7 +154,7 @@ export interface CreateWorkflowRequest {
         email: string
         phone: string
 
-        lang?: (typeof Language)[keyof typeof Language]
+        lang?: (typeof Languages)[keyof typeof Languages]
 
         clientUserId?: string
 
@@ -172,7 +172,7 @@ export interface CreateWorkflowRequest {
       email: string
       phone: string
 
-      lang?: (typeof Language)[keyof typeof Language]
+      lang?: (typeof Languages)[keyof typeof Languages]
     }
   }>
 
