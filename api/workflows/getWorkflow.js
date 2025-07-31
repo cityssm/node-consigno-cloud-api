@@ -21,6 +21,7 @@ export async function getWorkflow(workflowId) {
         }
     });
     if (!response.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
         const errorJson = (await response.json());
         throw new ConsignoCloudError(errorJson);
     }

@@ -35,6 +35,7 @@ export async function getWorkflow(
   })
 
   if (!response.ok) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
     const errorJson = (await response.json()) as ConsignoCloudErrorJson
     throw new ConsignoCloudError(errorJson)
   }
@@ -42,5 +43,5 @@ export async function getWorkflow(
   this.updateAuthTokenLastUsedMillis()
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-  return (await response.json()) as unknown as ConsignoCloudResponseWorkflow
+  return (await response.json()) as ConsignoCloudResponseWorkflow
 }
