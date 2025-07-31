@@ -93,6 +93,6 @@ class _ConsignoCloudAPI {
 }
 // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 export const ConsignoCloudAPI = _ConsignoCloudAPI;
-export { ConsignoCloudError } from './error.js';
+export { ConsignoCloudError, ConsignoCloudErrorCodes } from './error.js';
 export { default as lookups } from './lookups.js';
 export { default as utilities } from './utilities.js';

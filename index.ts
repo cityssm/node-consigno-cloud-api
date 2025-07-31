@@ -152,7 +152,7 @@ export const ConsignoCloudAPI = _ConsignoCloudAPI as unknown as new (
   apiConfig: ConsignoCloudAPIConfig
 ) => ConsignoCloudAPIType
 
-export { ConsignoCloudError } from './error.js'
+export { ConsignoCloudError, ConsignoCloudErrorCodes } from './error.js'
 
 export type {
   CreateWorkflowAnchor,

@@ -5,7 +5,8 @@ export interface ConsignoCloudErrorJson {
 }
 
 export class ConsignoCloudError extends Error {
-  errorCode?: string
+  errorCode: '' | ConsignoCloudErrorJson['code']
+  errorCodeName: string
   errorParameters?: Record<string, string>
 
   constructor(errorJson?: ConsignoCloudErrorJson) {
@@ -13,7 +14,23 @@ export class ConsignoCloudError extends Error {
 
     this.name = 'ConsignoCloudError'
 
-    this.errorCode = errorJson?.code
+    this.errorCode = errorJson?.code ?? ''
     this.errorParameters = errorJson?.parameters
+
+    // Parse error code name
+
+    try {
+      if (this.message.startsWith('[')) {
+        this.errorCodeName = this.message
+          .slice(1, this.message.indexOf(']'))
+          .split(' - ')[1]
+      }
+    } catch {
+      this.errorCodeName = this.errorCode
+    }
   }
+}
+
+export const ConsignoCloudErrorCodes = {
+  '5004': 'ENTITY_NOT_FOUND'
 }

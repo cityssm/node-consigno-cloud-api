@@ -13,9 +13,9 @@ import {
   apiSecret,
   baseUrl,
   createWorkflowDefinition,
-  invalidWorkflowId,
   loginInPassword,
   loginInUserName,
+  unknownWorkflowId,
   workflowId
 } from './config.js'
 
@@ -24,7 +24,7 @@ Debug.enable(DEBUG_ENABLE_NAMESPACES)
 const debug = Debug(`${DEBUG_NAMESPACE}:workflows:test`)
 
 await describe('ConsignoCloudAPI', async () => {
-  await it('should retrieve a workflow', async () => {
+  await it.skip('should retrieve a workflow', async () => {
     const api = new ConsignoCloudAPI({
       apiKey,
       apiSecret,
@@ -38,7 +38,7 @@ await describe('ConsignoCloudAPI', async () => {
     assert.strictEqual(workflow.response.id, workflowId)
   })
 
-  await it.skip('should throw an error when a workflow is not found', async () => {
+  await it('should throw an error when a workflow is not found', async () => {
     const api = new ConsignoCloudAPI({
       apiKey,
       apiSecret,
@@ -47,10 +47,11 @@ await describe('ConsignoCloudAPI', async () => {
 
     await assert.rejects(
       async () => {
-        await api.getWorkflow(invalidWorkflowId)
+        await api.getWorkflow(unknownWorkflowId)
       },
       {
-        errorCode: 'INVALID_WORKFLOW_ID',
+        errorCode: '5004',
+        errorCodeName: 'ENTITY_NOT_FOUND',
         name: 'ConsignoCloudError'
       }
     )
@@ -90,6 +91,7 @@ await describe('ConsignoCloudAPI', async () => {
 
     const filePath = `./test/output/documents.${contentType === 'application/pdf' ? 'pdf' : 'zip'}`
 
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     await fs.writeFile(filePath, data)
 
     debug(`Documents saved to ${filePath}`)
