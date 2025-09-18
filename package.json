@@ -27,19 +27,18 @@
     "./utilities.js": "./utilities.js"
   },
   "scripts": {
-    "test": "node --test"
     "test": "node --test",
     "test:utilities": "node --test test/utilities.test.js"
   },
   "dependencies": {
-    "@cityssm/to-millis": "^1.0.0",
-    "debug": "^4.4.1"
+    "@cityssm/to-millis": "^1.0.1",
+    "debug": "^4.4.3"
   },
   "devDependencies": {
     "@cityssm/is-pdf": "^2.0.0",
     "@types/debug": "^4.1.12",
-    "@types/node": "^24.0.15",
-    "eslint-config-cityssm": "^27.0.0",
+    "@types/node": "^24.5.2",
+    "eslint-config-cityssm": "^29.1.1",
     "prettier-config-cityssm": "^1.0.0"
   }
 }
