@@ -111,6 +111,7 @@ export interface CreateWorkflowAnchor {
 
 export interface CreateWorkflowRequest {
   name: string
+  
   expiresOn: `${number}-${number}-${number}` | number
   pdfaPolicy: (typeof PDFAPolicies)[keyof typeof PDFAPolicies]
 
