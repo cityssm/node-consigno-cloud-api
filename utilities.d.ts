@@ -18,8 +18,20 @@ export declare function uintArrayToBase64(data: Uint8Array): string;
  * @returns True if the workflow ID is valid, false otherwise.
  */
 export declare function validateWorkflowId(workflowId: string): boolean;
+/**
+ * Formats a phone number to the format accepted by the Consigno Cloud API.
+ * The formatted phone number will be in the format +1XXXXXXXXXX.
+ * Any extension will be returned separately.
+ * @param unformattedPhoneNumber - The phone number to format.
+ * @returns An object containing the formatted phone number and any extension.
+ */
+export declare function formatPhoneNumber(unformattedPhoneNumber: string): {
+    phone: string;
+    phoneExt: string;
+};
 declare const _default: {
     fileToBase64: typeof fileToBase64;
+    formatPhoneNumber: typeof formatPhoneNumber;
     uintArrayToBase64: typeof uintArrayToBase64;
     validateWorkflowId: typeof validateWorkflowId;
 };

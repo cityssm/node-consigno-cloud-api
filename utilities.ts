@@ -36,8 +36,51 @@ export function validateWorkflowId(workflowId: string): boolean {
   return /^[a-f0-9]{24}$/.test(workflowId)
 }
 
+const formattedPhoneNumberLength = 12 // +1XXXXXXXXXX
+
+/**
+ * Formats a phone number to the format accepted by the Consigno Cloud API.
+ * The formatted phone number will be in the format +1XXXXXXXXXX.
+ * Any extension will be returned separately.
+ * @param unformattedPhoneNumber - The phone number to format.
+ * @returns An object containing the formatted phone number and any extension.
+ */
+export function formatPhoneNumber(unformattedPhoneNumber: string): {
+  phone: string
+  phoneExt: string
+} {
+  let formattedPhoneNumber = unformattedPhoneNumber
+
+  // remove any non-numeric characters
+  formattedPhoneNumber = formattedPhoneNumber.replaceAll(/\D/g, '')
+
+  if (!formattedPhoneNumber.startsWith('1')) {
+    formattedPhoneNumber = `1${formattedPhoneNumber}`
+  }
+
+  // add a leading plus sign
+  formattedPhoneNumber = `+${formattedPhoneNumber}`
+
+  // parse out any extension
+  const phoneExtension =
+    formattedPhoneNumber.length > formattedPhoneNumberLength
+      ? formattedPhoneNumber.slice(formattedPhoneNumberLength)
+      : ''
+
+  formattedPhoneNumber = formattedPhoneNumber.slice(
+    0,
+    formattedPhoneNumberLength
+  )
+
+  return {
+    phone: formattedPhoneNumber,
+    phoneExt: phoneExtension
+  }
+}
+
 export default {
   fileToBase64,
+  formatPhoneNumber,
   uintArrayToBase64,
   validateWorkflowId
 }

@@ -28,6 +28,8 @@
   },
   "scripts": {
     "test": "node --test"
+    "test": "node --test",
+    "test:utilities": "node --test test/utilities.test.js"
   },
   "dependencies": {
     "@cityssm/to-millis": "^1.0.0",

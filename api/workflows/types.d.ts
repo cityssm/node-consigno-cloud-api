@@ -60,6 +60,7 @@ export interface ConsignoCloudResponseWorkflow {
                 lastName: string;
                 email: string;
                 phone: string;
+                phoneExt?: string;
                 amr: Array<(typeof AuthenticationMethodReferences)[keyof typeof AuthenticationMethodReferences]>;
                 lang: (typeof Languages)[keyof typeof Languages];
                 contactOwner: string;

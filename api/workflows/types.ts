@@ -92,6 +92,7 @@ export interface ConsignoCloudResponseWorkflow {
 
         email: string
         phone: string
+        phoneExt?: string
 
         amr: Array<
           (typeof AuthenticationMethodReferences)[keyof typeof AuthenticationMethodReferences]
