@@ -19,6 +19,7 @@
   },
   "license": "MIT",
   "author": "The Corporation of the City of Sault Ste. Marie",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": "./index.js",
@@ -26,6 +27,15 @@
     "./lookups.js": "./lookups.js",
     "./utilities.js": "./utilities.js"
   },
+  "files": [
+    "api/**/*",
+    "constants.*",
+    "debug.config.*",
+    "error.*",
+    "index.*",
+    "lookups.*",
+    "utilities.*"
+  ],
   "scripts": {
     "test": "node --test",
     "test:utilities": "node --test test/utilities.test.js"
@@ -36,9 +46,9 @@
   },
   "devDependencies": {
     "@cityssm/is-pdf": "^2.0.0",
-    "@types/debug": "^4.1.12",
-    "@types/node": "^24.5.2",
-    "eslint-config-cityssm": "^29.1.1",
-    "prettier-config-cityssm": "^1.0.0"
+    "@types/debug": "^4.1.13",
+    "@types/node": "^25.5.0",
+    "eslint-config-cityssm": "^38.5.2",
+    "prettier-config-cityssm": "^2.1.1"
   }
 }
