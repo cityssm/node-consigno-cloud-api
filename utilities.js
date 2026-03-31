@@ -1,12 +1,13 @@
+import { Buffer } from 'node:buffer';
 import fs from 'node:fs/promises';
 /**
  * Reads a file and converts its content to a base64 encoded string.
  * @param filePath - The path to the file to be read.
  * @returns A promise that resolves to the base64 encoded string of the file content.
- * @throws Will throw an error if the file cannot be read.
+ * @throws {Error} Will throw an error if the file cannot be read.
  */
 export async function fileToBase64(filePath) {
-    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    // eslint-disable-next-line security/detect-non-literal-fs-filename, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     return await fs.readFile(filePath, 'base64');
 }
 /**
@@ -19,6 +20,7 @@ export function uintArrayToBase64(data) {
     for (const datum of data) {
         binary += String.fromCodePoint(datum);
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     return Buffer.from(binary, 'binary').toString('base64');
 }
 /**

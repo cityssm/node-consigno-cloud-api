@@ -20,11 +20,9 @@ export class ConsignoCloudError extends Error {
     // Parse error code name
 
     try {
-      if (this.message.startsWith('[')) {
-        this.errorCodeName = this.message
-          .slice(1, this.message.indexOf(']'))
-          .split(' - ')[1]
-      }
+      this.errorCodeName = this.message.startsWith('[')
+        ? this.message.slice(1, this.message.indexOf(']')).split(' - ')[1]
+        : this.errorCode
     } catch {
       this.errorCodeName = this.errorCode
     }
